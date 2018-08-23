@@ -26,7 +26,7 @@ export default class App extends React.Component<{}, IState> {
           { this.state.isRuning ? 'Stop' : 'Start'}
         </Button>
         <CameraPreview isRuning={isRuning}/>
-        <SpearchRecognizer />
+        <SpearchRecognizer isRuning={isRuning}/>
       </div>
     );
   }
