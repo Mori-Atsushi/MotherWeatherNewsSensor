@@ -32,6 +32,7 @@ export default class CameraPreview extends React.Component<IProps> {
     return (
       <Wrapper>
         <Webcam
+          screenshotFormat='image/jpeg'
           ref={this._setRef}
           style={ { width: '100%', height: 'auto' } }
         />
