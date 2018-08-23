@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+import * as Api from '../api';
+
 interface IState {
   isRecognizing: boolean,
   result: string
@@ -47,6 +49,9 @@ export default class CameraPreview extends React.Component<{}, IState> {
   private _handleSpeechRecognitionEvent(e: SpeechRecognitionEvent) {
     const index = e.results.length - 1;
     const result = `${this.state.result} ${e.results[index][0].transcript}`;
+    if (!this.state.isRecognizing) {
+      Api.postText(result)
+    }
     this.setState({ result })
   }
 }
