@@ -36,6 +36,7 @@ export default class CameraPreview extends React.Component<IProps, IState> {
       } else {
         this.recognition.stop();
         window.clearInterval(this.timer);
+        this.setState({ result: '' });
       }
     }
   }
