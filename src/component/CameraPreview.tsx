@@ -4,13 +4,28 @@ import styled from 'styled-components';
 
 import * as Api from '../api';
 
-export default class CameraPreview extends React.Component {
-  private ref: Webcam;
+interface IProps {
+  isRuning: boolean
+}
 
-  constructor() {
-    super({});
+export default class CameraPreview extends React.Component<IProps> {
+  private ref: Webcam;
+  private timer: number;
+
+  constructor(props: IProps) {
+    super(props);
     this._setRef = this._setRef.bind(this);
-    this._handleClick = this._handleClick.bind(this);
+    this._postImage = this._postImage.bind(this);
+  }
+
+  public componentWillReceiveProps(nexProps: IProps) {
+    if (this.props.isRuning !== nexProps.isRuning) {
+      if (nexProps.isRuning) {
+        this.timer = window.setInterval(this._postImage, 10 * 1000);
+      } else {
+        window.clearInterval(this.timer);
+      }
+    }
   }
 
   public render() {
@@ -20,9 +35,6 @@ export default class CameraPreview extends React.Component {
           ref={this._setRef}
           style={ { width: '100%', height: 'auto' } }
         />
-        <Button onClick={this._handleClick} >
-          Submit
-        </Button>
       </Wrapper>
     )
   }
@@ -31,7 +43,7 @@ export default class CameraPreview extends React.Component {
     this.ref = webcam;
   }
 
-  private _handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+  private _postImage() {
     const image = this.ref.getScreenshot();
     if (image) {
       Api.postImage(image);
@@ -40,7 +52,4 @@ export default class CameraPreview extends React.Component {
 }
 
 const Wrapper = styled.div`
-`;
-
-const Button = styled.button`
 `;
