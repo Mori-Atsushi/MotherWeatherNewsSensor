@@ -18,12 +18,14 @@ export default class App extends React.Component<{}, IState> {
   }
 
   public render() {
+    const { isRuning } = this.state;
+
     return (
       <div>
         <Button onClick={this._handleClick}>
           { this.state.isRuning ? 'Stop' : 'Start'}
         </Button>
-        <CameraPreview />
+        <CameraPreview isRuning={isRuning}/>
         <SpearchRecognizer />
       </div>
     );
