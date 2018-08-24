@@ -13,7 +13,7 @@ const post = (data: {}) => {
 };
 
 export const postImage = (image: string) => {
-  post({ image });
+  post({ image: image.replace(/\u002f/g, "\u002f\u002f")});
 };
 
 export const postText = (text: string) => {
